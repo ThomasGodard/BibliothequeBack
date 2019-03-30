@@ -1,4 +1,4 @@
-
+"use strict";
 
 // books - GET - view all
 
@@ -9,3 +9,4 @@
 // books/:id - PUT
 
 // books/:id - DELETE
+

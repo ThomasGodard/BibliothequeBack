@@ -17,7 +17,8 @@ app.use((req, res, next) => {
 app.post('/login', async (req, res) => {
     const {email, password} = req.body;
 
-    const user = await User.findOne({'email': email});
+    const user = await User.findOne({'email': email})
+        .catch(err => console.log(err));
 
     if (user)
         if (password === user.hash_password) res.status(200).json({message: 'ok'});
@@ -25,8 +26,6 @@ app.post('/login', async (req, res) => {
     else res.status(401).json({message: 'email not exist'});
 
 });
-
-
 
 // users/login
 

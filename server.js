@@ -1,13 +1,13 @@
 "use strict";
 
 const app = require("express")();
-const mongoose = require("mongoose");
-const bodyParser = require("body-parser");
-require("./models/user");
-const User = mongoose.model("User");
+import { model, connect } from "mongoose";
+import { json, urlencoded } from "body-parser";
+import "./models/user";
+const User = model("User");
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(json());
+app.use(urlencoded({ extended: false }));
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
@@ -51,8 +51,7 @@ app.post("/login", async (req, res) => {
 
 // books/:id - DELETE
 
-mongoose
-  .connect("mongodb://localhost/test", { keepAlive: 1, useNewUrlParser: true })
+connect("mongodb://localhost/test", {keepAlive: 1, useNewUrlParser: true})
   .then(() => {
     app.listen(3030, () => {
       console.log("⤷ http://localhost:3030");

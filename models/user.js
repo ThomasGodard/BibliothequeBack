@@ -36,7 +36,7 @@ userSchema.methods = {
      * @param password
      * @returns {boolean}
      */
-    auth: function(password) {
+    checkPassword: function(password) {
         return this.encryptPassword(password) === this.hash_password;
     },
 

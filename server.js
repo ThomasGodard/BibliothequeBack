@@ -1,10 +1,8 @@
 "use strict";
 
 const app = require("express")();
-import { model, connect } from "mongoose";
-import { json, urlencoded } from "body-parser";
-import "./models/user";
-const User = model("User");
+const mongoose = require("mongoose");
+const {json, urlencoded} = require("body-parser");
 
 app.use(json());
 app.use(urlencoded({ extended: false }));
@@ -21,19 +19,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.post("/login", async (req, res) => {
-  const { email, password } = req.body;
-
-  const user = await User.findOne({ email: email }).catch(err =>
-    console.log(err)
-  );
-
-  if (user)
-    if (password === user.hash_password)
-      res.status(200).json({ message: "ok" });
-    else res.status(401).json({ message: "bad password" });
-  else res.status(401).json({ message: "email not exist" });
-});
+app.use("/users", require('./routes/users'));
 
 // users/login
 
@@ -51,7 +37,7 @@ app.post("/login", async (req, res) => {
 
 // books/:id - DELETE
 
-connect("mongodb://localhost/test", {keepAlive: 1, useNewUrlParser: true})
+mongoose.connect("mongodb://localhost/test", {keepAlive: 1, useNewUrlParser: true})
   .then(() => {
     app.listen(3030, () => {
       console.log("⤷ http://localhost:3030");

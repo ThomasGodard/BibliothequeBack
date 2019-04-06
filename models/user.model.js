@@ -1,5 +1,5 @@
-const crypto = require('crypto');
-const mongoose = require('mongoose');
+const crypto = require("crypto");
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 
@@ -17,7 +17,7 @@ const userSchema = new Schema({
 /**
  * Virtual property
  */
-userSchema.virtual('password')
+userSchema.virtual("password")
     .set(function (password) {
         this._password = password;
         this.salt = this.saltGenerator();
@@ -46,7 +46,7 @@ userSchema.methods = {
      * @returns {string}
      */
     saltGenerator: function () {
-        return crypto.randomBytes(10).toString('hex');
+        return crypto.randomBytes(10).toString("hex");
     },
 
     /**
@@ -56,17 +56,17 @@ userSchema.methods = {
      * @returns {string}
      */
     encryptPassword: function(password) {
-        if (!password) return '';
+        if (!password) return "";
         try {
             return crypto
-                .createHmac('sha1', this.salt)
+                .createHmac("sha1", this.salt)
                 .update(password)
-                .digest('hex');
+                .digest("hex");
 
         } catch (err) {
-            return '';
+            return "";
         }
     }
 };
 
-mongoose.model('User', userSchema);
+module.exports = userSchema;

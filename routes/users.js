@@ -18,4 +18,16 @@ router.post("/login", async (req, res) => {
   else res.status(401).json({ message: "email not exist" });
 });
 
+router.post('/', (req, res) => {
+
+  User.create(req.body, (err, user) => {
+    if(err) {
+      res.status(418).json({message: "erreur"});
+    } else {
+      res.status(201).json(user);
+    }
+  });
+
+});
+
 module.exports = router;

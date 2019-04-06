@@ -7,8 +7,7 @@ const Schema = mongoose.Schema;
  * Schema
  */
 const userSchema = new Schema({
-    firstName: String,
-    lastName: String,
+    userName: String,
     email: String,
     hash_password: String,
     salt: String
@@ -21,7 +20,7 @@ userSchema.virtual("password")
     .set(function (password) {
         this._password = password;
         this.salt = this.saltGenerator();
-        this.hash_password = this.encrypt();
+        this.hash_password = this.encryptPassword(password);
     })
     .get(function () {
         return this._password;

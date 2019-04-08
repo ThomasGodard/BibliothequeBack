@@ -12,7 +12,7 @@ router.post("/login", async (req, res) => {
   );
 
   if (user)
-    if (password === user.hash_password)
+    if (user.checkPassword(password))
       res.status(200).json({ message: "ok" });
     else res.status(401).json({ message: "bad password" });
   else res.status(401).json({ message: "email not exist" });

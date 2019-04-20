@@ -7,13 +7,13 @@ const User = mongoose.model("User", require("../models/user.model"));
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
-  const user = await User.findOne({ email: email }).catch(err =>
+  const user = await User.findOne({email: email}).catch(err =>
     console.log(err)
   );
 
   if (user)
     if (user.checkPassword(password))
-      res.status(200).json({email: user.email, userName: user.userName});
+      res.status(200).json({email:user.email, userName:user.userName});
     else res.status(401).json({ error: "bad password" });
   else res.status(401).json({ error: "email not exist" });
 });
